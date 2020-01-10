@@ -63,5 +63,6 @@ TEST_F(ci_example_example_func, new_covered_func)
 TEST_F(ci_example_example_func, yet_another_covered_func)
 {
     EXPECT_EQ(8, ci_example::yet_another_covered_func(2));
+    EXPECT_EQ(27, ci_example::yet_another_covered_func(3));
 }
 
