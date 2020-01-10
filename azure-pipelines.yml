@@ -103,3 +103,49 @@ jobs:
         script: |
             set -e
             sh scripts/run_tests_$(BuildType).sh
+
+- job:
+  displayName: Code Coverage
+  pool:
+    vmImage: 'ubuntu-18.04'
+
+  steps:
+    - task: Bash@3
+      displayName: Install CMake 3.13+
+      inputs:
+        targetType: 'inline'
+        script: |
+          set -e
+          sh scripts/utils/install_cmake_ubuntu1804.sh
+
+    - task: Bash@3
+      displayName: Install lcov
+      inputs:
+        targetType: 'inline'
+        script: |
+          set -e
+          sh scripts/utils/install_lcov_ubuntu1804.sh
+
+    - task: Bash@3
+      displayName: Configure project
+      inputs:
+        targetType: 'inline'
+        script: |
+            set -e
+            sh scripts/ci/configure_lcov.sh
+
+    - task: Bash@3
+      displayName: Build project
+      inputs:
+        targetType: 'inline'
+        script: |
+            set -e
+            sh scripts/build_debug.sh
+
+    - task: Bash@3
+      displayName: Run coverage
+      inputs:
+        targetType: 'inline'
+        script: |
+            set -e
+            sh scripts/run_coverage.sh
