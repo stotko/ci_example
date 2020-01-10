@@ -149,3 +149,11 @@ jobs:
         script: |
             set -e
             sh scripts/run_coverage.sh
+
+    - task: Bash@3
+      displayName: Upload coverage report to codecov.io
+      inputs:
+        targetType: 'inline'
+        script: |
+            set -e
+            bash <(curl -s https://codecov.io/bash) -f build/ci_example_coverage.info
