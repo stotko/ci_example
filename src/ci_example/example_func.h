@@ -27,6 +27,18 @@ covered_func(float x)
     return static_cast<int>(x);
 }
 
+inline int
+new_covered_func(int x)
+{
+    return x * x;
+}
+
+inline int
+yet_another_covered_func(int x)
+{
+    return x * x * x;
+}
+
 template <typename T>
 T
 unused_func(T t)
