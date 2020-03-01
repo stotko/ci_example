@@ -156,4 +156,4 @@ jobs:
         targetType: 'inline'
         script: |
             set -e
-            bash <(curl -s https://codecov.io/bash) -f build/ci_example_coverage.info
+            bash <(curl -s https://codecov.io/bash) -Z -t $(codecov_upload_token) -f build/ci_example_coverage.info
