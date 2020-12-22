@@ -1,0 +1,52 @@
+name: Coverage
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  Coverage:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install CMake 3.13+
+        shell: bash
+        run: |
+          set -e
+          sh scripts/utils/install_cmake_ubuntu2004.sh
+
+      - name: Install lcov
+        shell: bash
+        run: |
+          set -e
+          sh scripts/utils/install_lcov_ubuntu.sh
+
+      - name: Configure project
+        shell: bash
+        run: |
+          set -e
+          sh scripts/ci/configure_lcov.sh
+
+      - name: Build project
+        shell: bash
+        run: |
+          set -e
+          sh scripts/build_debug.sh
+
+      - name: Run coverage
+        shell: bash
+        run: |
+          set -e
+          sh scripts/run_coverage.sh
+
+      - name: Upload coverage report
+        shell: bash
+        run: |
+          set -e
+            bash <(curl -s https://codecov.io/bash) -Z -f build/ci_example_coverage.info
